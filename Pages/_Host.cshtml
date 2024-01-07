@@ -1,0 +1,10 @@
+﻿@page "/"
+@namespace SeatingCharts.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+<!-- Add this to the head of your _Host.cshtml or index.html -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<component type="typeof(App)" render-mode="ServerPrerendered" />

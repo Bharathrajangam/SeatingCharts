@@ -1,0 +1,46 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+
+<h3>Seating Chart Designer</h3>
+
+<Seatingchart SeatingLayout="@seatingLayout" />
+
+@code {
+    private SeatingLayout seatingLayout;
+
+    protected override async Task OnInitializedAsync()
+    {
+        InitializeSeatingLayout();
+    }
+    private SeatingLayout InitializeSeatingLayout()
+        {
+            SeatingLayout layout = new SeatingLayout();
+
+            // Assuming a simple auditorium layout with 10 rows and 20 columns
+            int totalRows = 10;
+            int totalColumns = 20;
+
+            for (int row = 1; row <= totalRows; row++)
+            {
+                for (int column = 1; column <= totalColumns; column++)
+                {
+                    layout.Seats.Add(new Seat
+                        {
+                            Row = row,
+                            Column = column,
+                            IsOccupied = false
+                        });
+                }
+            }
+
+            // Mark some seats as occupied for demonstration purposes
+            layout.Seats[2].IsOccupied = true;
+            layout.Seats[5].IsOccupied = true;
+            layout.Seats[8].IsOccupied = true;
+            // ... Add more occupied seats as needed
+
+            return layout;
+        }
+}

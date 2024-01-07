@@ -1,0 +1,59 @@
+﻿<!-- SeatingChart.razor -->
+@inherits LayoutComponentBase
+@using ChartJs.Blazor;
+
+<canvas id="seatingCanvas"></canvas>
+
+@code {
+    private List<Seat> SeatingLayout { get; set; } = new List<Seat>(); // Assuming you have a list of Seat objects
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await DrawSeatingChart();
+        }
+    }
+
+
+
+    private async Task DrawSeatingChart()
+    {
+        var config = new ChartConfig
+            {
+                Type = ChartType.Bubble,
+                Data = new ChartData
+                {
+                    Datasets = new List<ChartDataset<ChartPoint>>
+                {
+                    new ChartDataset<ChartPoint>
+                    {
+                        Label = "Seating",
+                        Data = SeatingLayout.Select(seat => new ChartPoint
+                        {
+                            X = seat.Column,
+                            Y = seat.Row,
+                            Radius = 5, // Adjust the radius as needed
+                            BackgroundColor = seat.IsOccupied ? "red" : "green"
+                        }).ToList()
+                    }
+                }
+                },
+                Options = new ChartOptions
+                {
+                    Responsive = true,
+                    MaintainAspectRatio = false,
+                    Elements = new ChartElements
+                    {
+                        Point = new ChartPointOptions
+                        {
+                            Radius = 5, // Adjust the radius as needed
+                            HoverRadius = 8
+                        }
+                    }
+                }
+            };
+
+        await JSRuntime.InvokeVoidAsync("ChartJsInterop.initialize", "seatingCanvas", config);
+    }
+}

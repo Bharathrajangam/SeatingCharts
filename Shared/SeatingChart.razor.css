@@ -1,0 +1,16 @@
+﻿/* styles.css */
+.seating-chart {
+    display: grid;
+    grid-template-columns: repeat(10, 50px); /* Adjust the number of columns as needed */
+    grid-gap: 5px;
+}
+
+.available {
+    background-color: #b2ffb2; /* Green for available seats */
+    cursor: pointer;
+}
+
+.occupied {
+    background-color: #ff9999; /* Red for occupied seats */
+    cursor: not-allowed;
+}
